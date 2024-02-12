@@ -10,7 +10,7 @@ export default function MoonPayProviderWrapper({
 }) {
     return (
         <MoonPayProvider
-            apiKey="pk_test_7xH7TvLqbVOivrZV7Nqk7jtXSyGqJ4Qc"
+            apiKey={process.env.NEXT_PUBLIC_MOONPAY_APP_ID || ""}
             debug
             environment="sandbox"
         >
