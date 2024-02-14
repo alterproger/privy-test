@@ -3,6 +3,7 @@
 import { PrivyProvider } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 
+
 export default function PrivyProviderWrapper({
   children,
 }: {

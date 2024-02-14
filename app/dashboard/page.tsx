@@ -1,19 +1,60 @@
 'use client';
 
 import {useRouter} from "next/navigation";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {usePrivy, useWallets} from "@privy-io/react-auth";
 import Head from "next/head";
 // import {MoonPayBuyWidget} from "@moonpay/moonpay-react";
 // import {Web3} from "web3";
 // import {type RegisteredSubscription} from "web3-eth";
+import {mainnet, goerli, sepolia, bsc, bscTestnet, polygon, polygonMumbai} from 'viem/chains';
+import Select from 'react-select';
 
-const WALLET_TO_RECEIVE = '0x04F623989Ad25FbcCf88F6e052A260C92770b766'
+// const WALLET_TO_RECEIVE = '0x04F623989Ad25FbcCf88F6e052A260C92770b766'
+const WALLET_TO_RECEIVE = '0xbDA77a80b7DD30CA4fFEd8d1C9f9b207a466adcA'
+
+interface OptionType    {
+    value: string | number
+    label: string
+}
+
+const options:OptionType[] = [
+    {
+        value: mainnet.id,
+        label: mainnet.name
+    },
+    {
+        value: sepolia.id,
+        label: sepolia.nativeCurrency.name
+    },
+    {
+        value: goerli.id,
+        label: goerli.nativeCurrency.name
+    },
+    {
+        value: bsc.id,
+        label: bsc.name
+    },
+    {
+        value: bscTestnet.id,
+        label: bscTestnet.name
+    },
+    {
+        value: polygon.id,
+        label: polygon.name
+    },
+    {
+        value: polygonMumbai.id,
+        label: polygonMumbai.name
+    },
+]
 
 export default function DashboardPage() {
     const router = useRouter();
 
     // const [web3, setWeb3] = useState< Web3<RegisteredSubscription> | null>(null);
+    const [selectedChainId, setSelectedChainId] = useState(options[0].value);
+    const [selectedWallet, setSelectedWallet] = useState<OptionType | null>(null);
 
     const {
         ready,
@@ -64,14 +105,14 @@ export default function DashboardPage() {
     const discordSubject = user?.discord?.subject || null;
 
     async function sendTestTransaction() {
-        const value = 9000000000000n;
-        const privWallet = wallets.find(wallet => wallet.walletClientType === 'privy')
+        const value = 900000000000000n;
+        const currentWallet = wallets.find(wallet => wallet.address === selectedWallet?.value as string);
 
         const unsignedTx = {
             to: WALLET_TO_RECEIVE,
-            chainId: 11155111,
+            chainId: selectedChainId as number,
             value,
-            from: privWallet!.address
+            from: selectedWallet?.value  as string
         };
 
         const uiConfig = {
@@ -80,17 +121,14 @@ export default function DashboardPage() {
             buttonText: 'Sample button text'
         };
 
-
         // const fundResult = await wallet2?.fund()
         // const signResult = await wallet2?.sign('Are you sure?');
-        await privWallet?.switchChain(11155111);
+        await currentWallet?.switchChain(selectedChainId as number);
 
         // const signature = await signMessage('Are you sure?', uiConfig);
         const txReceipt = await sendTransaction(unsignedTx, uiConfig);
         console.log({txReceipt})
     }
-
-    console.log({wallets})
 
     return (
         <>
@@ -230,12 +268,29 @@ export default function DashboardPage() {
                             )}
                             <button onClick={() => sendTestTransaction()} disabled={!wallets[0]}>Send Transaction
                             </button>
-                            <button
-                                onClick={()=>router.push('/moonpay')}
-                                className="text-sm bg-violet-600 hover:bg-violet-700 py-2 px-4 rounded-md text-white border-none"
-                            >
-                              Top Up
-                            </button>
+                            {/*<button*/}
+                            {/*    onClick={()=>router.push('/moonpay')}*/}
+                            {/*    className="text-sm bg-violet-600 hover:bg-violet-700 py-2 px-4 rounded-md text-white border-none"*/}
+                            {/*>*/}
+                            {/*  Top Up*/}
+                            {/*</button>*/}
+                            <Select
+                                onChange={(value) => {
+                                    setSelectedChainId(value.value);
+                                }}
+                                options={options}
+                                className="w-[200px]"
+                                placeholder='Select Chain'
+
+                            />
+                            <Select
+                                className="w-[200px]"
+                                onChange={(wallet) => {
+                                    setSelectedWallet(wallet)
+                                }}
+                                placeholder='Select Wallet'
+                                options={wallets.map(wallet => ({value: wallet.address, label: wallet.walletClientType}))}
+                            />
                         </div>
 
                         <p className="mt-6 font-bold uppercase text-sm text-gray-600">

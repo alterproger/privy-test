@@ -4,8 +4,8 @@
 import {MoonPayProvider} from "@moonpay/moonpay-react";
 
 export default function MoonPayProviderWrapper({
-                                                 children,
-                                             }: {
+                                                   children,
+                                               }: {
     children: React.ReactNode;
 }) {
     return (

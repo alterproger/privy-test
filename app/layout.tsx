@@ -41,10 +41,10 @@ export default function RootLayout({
         <link rel="manifest" href="/favicons/manifest.json"/>
         <body>
         <PrivyProviderWrapper>
-            <MoonPayProviderWrapper>
+            {/*<MoonPayProviderWrapper>*/}
 
                 {children}
-            </MoonPayProviderWrapper>
+            {/*</MoonPayProviderWrapper>*/}
         </PrivyProviderWrapper>
         </body>
         </html>
