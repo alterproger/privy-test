@@ -13,12 +13,12 @@ import Select from 'react-select';
 // const WALLET_TO_RECEIVE = '0x04F623989Ad25FbcCf88F6e052A260C92770b766'
 const WALLET_TO_RECEIVE = '0xbDA77a80b7DD30CA4fFEd8d1C9f9b207a466adcA'
 
-interface OptionType    {
+interface OptionType {
     value: string | number
     label: string
 }
 
-const options:OptionType[] = [
+const options: OptionType[] = [
     {
         value: mainnet.id,
         label: mainnet.name
@@ -106,13 +106,14 @@ export default function DashboardPage() {
 
     async function sendTestTransaction() {
         const value = 900000000000000n;
-        const currentWallet = wallets.find(wallet => wallet.address === selectedWallet?.value as string);
+        // const currentWallet = wallets.find(wallet => wallet.address === selectedWallet?.value as string);
+        const currentWallet = wallets.find(wallet => wallet.walletClientType === 'privy');
 
         const unsignedTx = {
             to: WALLET_TO_RECEIVE,
             chainId: selectedChainId as number,
             value,
-            from: selectedWallet?.value  as string
+            from: currentWallet?.address
         };
 
         const uiConfig = {
@@ -266,8 +267,7 @@ export default function DashboardPage() {
                                     Connect phone
                                 </button>
                             )}
-                            <button onClick={() => sendTestTransaction()} disabled={!wallets[0]}>Send Transaction
-                            </button>
+
                             {/*<button*/}
                             {/*    onClick={()=>router.push('/moonpay')}*/}
                             {/*    className="text-sm bg-violet-600 hover:bg-violet-700 py-2 px-4 rounded-md text-white border-none"*/}
@@ -283,14 +283,18 @@ export default function DashboardPage() {
                                 placeholder='Select Chain'
 
                             />
-                            <Select
-                                className="w-[200px]"
-                                onChange={(wallet) => {
-                                    setSelectedWallet(wallet)
-                                }}
-                                placeholder='Select Wallet'
-                                options={wallets.map(wallet => ({value: wallet.address, label: wallet.walletClientType}))}
-                            />
+                            {/*<Select*/}
+                            {/*    className="w-[200px] uppercase"*/}
+                            {/*    onChange={(wallet) => {*/}
+                            {/*        setSelectedWallet(wallet)*/}
+                            {/*    }}*/}
+                            {/*    placeholder='Select Wallet'*/}
+                            {/*    options={wallets.map(wallet => ({value: wallet.address, label: wallet.walletClientType}))}*/}
+                            {/*/>*/}
+                            <button onClick={() => sendTestTransaction()}
+                                    className="text-sm bg-violet-600 hover:bg-violet-700 py-2 px-4 rounded-md text-white border-none"
+                                    disabled={!wallets[0]}>Send Transaction
+                            </button>
                         </div>
 
                         <p className="mt-6 font-bold uppercase text-sm text-gray-600">
