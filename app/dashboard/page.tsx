@@ -10,8 +10,8 @@ import Head from "next/head";
 import {mainnet, goerli, sepolia, bsc, bscTestnet, polygon, polygonMumbai} from 'viem/chains';
 import Select from 'react-select';
 
-// const WALLET_TO_RECEIVE = '0x04F623989Ad25FbcCf88F6e052A260C92770b766'
-const WALLET_TO_RECEIVE = '0xbDA77a80b7DD30CA4fFEd8d1C9f9b207a466adcA'
+const WALLET_TO_RECEIVE = '0x04F623989Ad25FbcCf88F6e052A260C92770b766'
+// const WALLET_TO_RECEIVE = '0xbDA77a80b7DD30CA4fFEd8d1C9f9b207a466adcA'
 
 interface OptionType {
     value: string | number

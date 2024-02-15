@@ -12,31 +12,31 @@
     "lint": "next lint && npx prettier --check \"{__tests__,components,app,styles}/**/*.{ts,tsx,js,jsx}\" && npx tsc --noEmit"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.3",
-    "@heroicons/react": "^2.0.12",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@moonpay/moonpay-js": "^0.4.2",
     "@moonpay/moonpay-react": "^1.5.4",
-    "@privy-io/react-auth": "1.42.0",
-    "@tailwindcss/forms": "^0.5.3",
+    "@privy-io/react-auth": "1.56.0",
+    "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.6.7",
-    "next": "^13.5.4",
+    "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-select": "^5.8.0",
     "viem": "^2.7.9",
-    "web3": "^4.4.0"
+    "web3": "^4.5.0"
   },
   "devDependencies": {
     "@tsconfig/node16-strictest-esm": "^1.0.3",
-    "@types/node": "^17.0.35",
-    "@types/react": "18.0.9",
-    "autoprefixer": "^10.4.7",
-    "dotenv-cli": "^6.0.0",
-    "eslint": "^8.23.0",
-    "eslint-config-next": "12.2.5",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.2",
-    "ts-node": "^10.9.1",
+    "@types/node": "^20.11.17",
+    "@types/react": "18.2.55",
+    "autoprefixer": "^10.4.17",
+    "dotenv-cli": "^7.3.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
